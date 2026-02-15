@@ -1,0 +1,7 @@
+{
+  "name": "CloudOne_Invoice_14_02_2026",
+  "description": "A comprehensive business management suite for Cloud One Technologies featuring customer management, automated quotations and invoices, real-time analytics, and secure cloud backups.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
