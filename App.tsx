@@ -14,6 +14,8 @@ import Backup from './pages/Backup';
 import Login from './pages/Login';
 import Onboarding from './pages/Onboarding';
 import Profile from './pages/Profile';
+import Messages from './pages/Messages';
+import Notifications from './pages/Notifications';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, isLoading } = useAuth();
@@ -84,6 +86,18 @@ const App: React.FC = () => {
             <Route path="/services" element={
               <ProtectedRoute>
                 <Services />
+              </ProtectedRoute>
+            } />
+
+            <Route path="/messages" element={
+              <ProtectedRoute>
+                <Messages />
+              </ProtectedRoute>
+            } />
+
+            <Route path="/notifications" element={
+              <ProtectedRoute>
+                <Notifications />
               </ProtectedRoute>
             } />
 
