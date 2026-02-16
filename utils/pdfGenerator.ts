@@ -3,7 +3,7 @@ import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { Customer, LineItem, Quotation, Invoice, Currency, DocStatus } from '../types';
 import { formatCurrencyValueOnly } from './storage';
-import { APP_LOGO, BANK_DETAILS, PAYMENT_QR_URL, AED_TO_INR_RATE } from '../constants';
+import { APP_LOGO, BANK_DETAILS, PAYMENT_QR_URL } from '../constants';
 
 /**
  * Helper to convert image URL to base64 for reliable PDF embedding
@@ -160,7 +160,7 @@ export const generateDocumentPDF = async (
     margin: { left: 14, right: 14 },
   });
 
-  const finalY = (doc as any).lastAutoTable.finalY || 150;
+  const finalY = (doc as any).lastAutoTable?.finalY || 150;
 
   const summaryX = 130;
   doc.setFontSize(9);

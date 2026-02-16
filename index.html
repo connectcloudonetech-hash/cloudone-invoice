@@ -3,21 +3,56 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cloud One Technologies | Business ERP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>Cloud One Technologies | Next-Gen ERP</title>
+    
+    <!-- PWA Manifest and Meta Tags -->
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#2b5d8a" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="CloudOne" />
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/connectcloudonetech-hash/cloudoneuae/refs/heads/main/images/1.png" />
+
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/connectcloudonetech-hash/cloudoneuae/refs/heads/main/images/1.png" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         theme: {
           extend: {
             colors: {
               brand: {
-                primary: '#2b5d8a', // Dark blue from logo
-                secondary: '#25c1eb', // Bright blue from logo
+                primary: '#2b5d8a',
+                secondary: '#25c1eb',
                 accent: '#1e40af',
-                surface: '#f8fafc',
+                surface: '#fcfdfe',
+                glass: 'rgba(255, 255, 255, 0.7)',
+              }
+            },
+            borderRadius: {
+              '4xl': '2rem',
+              '5xl': '2.5rem',
+              '6xl': '3.5rem',
+            },
+            animation: {
+              'float': 'float 6s ease-in-out infinite',
+              'pulse-soft': 'pulse-soft 4s ease-in-out infinite',
+              'slide-up': 'slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0px)' },
+                '50%': { transform: 'translateY(-10px)' },
+              },
+              'pulse-soft': {
+                '0%, 100%': { opacity: 1 },
+                '50%': { opacity: 0.6 },
+              },
+              'slide-up': {
+                '0%': { transform: 'translateY(20px)', opacity: 0 },
+                '100%': { transform: 'translateY(0)', opacity: 1 },
               }
             }
           }
@@ -27,6 +62,14 @@
     <style>
       body {
         font-family: 'Inter', sans-serif;
+        overscroll-behavior-y: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
       }
       .bg-brand-gradient {
         background: linear-gradient(135deg, #2b5d8a 0%, #25c1eb 100%);
@@ -36,19 +79,15 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
-      /* Custom scrollbar for better aesthetics */
-      .custom-scrollbar::-webkit-scrollbar {
-        width: 6px;
-      }
-      .custom-scrollbar::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: #e2e8f0;
-        border-radius: 10px;
-      }
-      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: #cbd5e1;
+      .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+      
+      /* Smooth Page Transitions */
+      .page-enter { opacity: 0; transform: translateY(10px); }
+      .page-enter-active { opacity: 1; transform: translateY(0); transition: all 400ms ease-out; }
+
+      @media all and (display-mode: standalone) {
+        body { padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
       }
     </style>
   <script type="importmap">
@@ -68,8 +107,33 @@
 </script>
 <link rel="stylesheet" href="/index.css">
 </head>
-  <body class="bg-gray-50 text-slate-900">
+  <body class="bg-[#f8fbfe] text-slate-900 selection:bg-brand-secondary/30">
     <div id="root"></div>
+    <script>
+      // Defensive Service Worker Registration for PWA
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          // A small delay often resolves "Invalid State" errors in sandboxed preview environments
+          // by allowing the document lifecycle to reach a stable "complete" state.
+          setTimeout(() => {
+            try {
+              // Direct relative path is generally most reliable
+              navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('Terminal Node SW Active:', reg.scope))
+                .catch(err => {
+                  if (err.name === 'SecurityError' || err.name === 'InvalidStateError') {
+                    console.warn('SW registration restricted by environment security/lifecycle policy. Offline features may be unavailable.');
+                  } else {
+                    console.error('Service Worker registration failed:', err);
+                  }
+                });
+            } catch (e) {
+              console.warn('Synchronous SW registration check failed:', e);
+            }
+          }, 1000);
+        });
+      }
+    </script>
   <script type="module" src="/index.tsx"></script>
 </body>
 </html>

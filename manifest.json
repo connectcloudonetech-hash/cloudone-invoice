@@ -1,0 +1,24 @@
+
+{
+  "name": "Cloud One Technologies",
+  "short_name": "CloudOne",
+  "description": "Enterprise Management Suite for Cloud One Technologies",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#2b5d8a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/connectcloudonetech-hash/cloudoneuae/refs/heads/main/images/1.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://raw.githubusercontent.com/connectcloudonetech-hash/cloudoneuae/refs/heads/main/images/1.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
